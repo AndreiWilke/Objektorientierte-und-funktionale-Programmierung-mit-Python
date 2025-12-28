@@ -1,16 +1,13 @@
-"""Mini-Test: Plot (Matplotlib)
-Ziel: Nachweis, dass Lernzeit-Daten visualisiert werden können.
-Ausgabe: Plot-Fenster + 'OK: ...'
-"""
-
+import csv
+from collections import defaultdict
 import matplotlib.pyplot as plt
 
 def main() -> None:
-    totals = {
-        "DLBDSOOFPP01": 65,
-        "DLBDSCC01": 30,
-        "DLBDSAI01": 90,
-    }
+    totals = defaultdict(int)
+
+    with open("data_sessions.csv", encoding="utf-8", newline="") as f:
+        for row in csv.DictReader(f):
+            totals[row["module_code"]] += int(row["duration_minutes"])
 
     codes = list(totals.keys())
     minutes = list(totals.values())
@@ -23,7 +20,7 @@ def main() -> None:
     plt.tight_layout()
     plt.show()
 
-    print("OK: Plot wurde angezeigt.")
+    print("OK: Plot angezeigt")
 
 if __name__ == "__main__":
     main()
